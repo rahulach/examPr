@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container-name: my-html-container
+    ports:
+      - "80:80"
+
+    db:
+      image: postgres:latest
+      container-name: my-postgres-container
+      environment:
+        POSTGRES_DB: mydatabase
+        POSTGRES_USER: user
+        POSTGRES_PASSWORD: password
+      ports:
+        - "5432:5432"
+      volumes:
+        - postgres-data:/var/lib/postgresql/
+
+volumes:
+  postgres-data:
+
+  
