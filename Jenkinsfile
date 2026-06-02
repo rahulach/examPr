@@ -4,9 +4,9 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/rahulach/examPr'
+                git branch: 'main', url: 'https://github.com/rahulach/examPr'
             }
-        }
+        }   
 
         stage('Build Docker Image') {
             steps {
