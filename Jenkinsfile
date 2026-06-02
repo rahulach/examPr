@@ -2,6 +2,17 @@ pipeline {
     agent any
 
     stages {
+        stage('Debug Kubernetes') {
+            steps {
+                bat '''
+                echo USERPROFILE=%USERPROFILE%
+                kubectl config current-context
+                kubectl config view
+                kubectl get nodes
+                '''
+            }
+        }
+        
         stage('Build Docker Image') {
             steps {
                 bat 'docker build -t my-html-app:latest .'
