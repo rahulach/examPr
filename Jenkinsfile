@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Debug Kubernetes') {
+        
+        stage('Check Minikube') {
             steps {
                 bat '''
-                echo USERPROFILE=%USERPROFILE%
-                kubectl config current-context
-                kubectl config view
+                set KUBECONFIG=C:\\Users\\sainh\\.kube\\config
                 kubectl get nodes
                 '''
             }
@@ -22,7 +21,6 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 bat '''
-                set KUBECONFIG=C:\\Users\\sainh\\.kube\\config
                 kubectl config current-context
                 kubectl get nodes
                 kubectl apply -f deployment.yaml
