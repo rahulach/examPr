@@ -1,14 +1,7 @@
 pipeline {
-    agent any
+    agent { label 'built-in' } // This forces Jenkins to use your machine's environment where Docker & Minikube live
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                // Explicitly targeting the 'main' branch
-                git branch: 'main', url: 'https://github.com/rahulach/examPr.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t my-html-app:latest .'
