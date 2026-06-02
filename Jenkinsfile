@@ -2,21 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/rahulach/examPr'
-            }
-        }   
-
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t my-html-app:latest .'
-            }
-        }
-
-        stage('Load Image to Minikube') {
-            steps {
-                sh 'minikube image load my-html-app:latest'
+                sh 'eval $(minikube -p minikube docker-env) && docker build -t my-html-app:latest .'
             }
         }
 
