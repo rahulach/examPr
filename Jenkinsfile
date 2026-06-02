@@ -2,36 +2,36 @@ pipeline {
     agent any
 
     stages {
-
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/rahulach/examPr'
+                // Explicitly targeting the 'main' branch
+                git branch: 'main', url: 'https://github.com/rahulach/examPr.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t my-html-app:latest .'
+                sh 'docker build -t my-html-app:latest .'
             }
         }
 
         stage('Load Image to Minikube') {
             steps {
-                bat 'minikube image load my-html-app:latest'
+                sh 'minikube image load my-html-app:latest'
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl apply -f deployment.yaml'
-                bat 'kubectl apply -f service.yaml'
+                sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl apply -f service.yaml'
             }
         }
 
         stage('Verify Deployment') {
             steps {
-                bat 'kubectl get pods'
-                bat 'kubectl get svc'
+                sh 'kubectl get pods'
+                sh 'kubectl get svc'
             }
         }
     }
